@@ -1,0 +1,14 @@
+{
+    // Characters that signal the start or end of a path.
+    // If these aren't set, the start and end of the line is used.
+    "delimiters": " '\"",
+    // List of other paths to use as a base path when trying to find a file
+    "base_directories": [
+    ],
+    // Don't test if supplied path is actually a path in it's own right
+    "exclude_literal": false,
+    // Don't test path based on currently opened files
+    "exclude_current": false,
+    // Don't test path based on projects directories
+    "exclude_project": false
+}
