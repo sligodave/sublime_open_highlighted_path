@@ -89,6 +89,17 @@ In your current project file, you can also add aliases:
     "Open Highlighted Path"
 
 
+### Keyboard shortcuts:
+
+OSX/Linux/Windows
+
+```json
+[
+	{ "keys": ["ctrl+alt+p"], "command": "open_highlighted_path" }
+]
+```
+
+
 ## Issues and suggestions:
 
 Fire on any issues or suggestions you have.
