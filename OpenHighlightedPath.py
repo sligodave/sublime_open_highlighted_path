@@ -55,27 +55,35 @@ class OpenHighlightedPathCommand(sublime_plugin.TextCommand):
     def run(self, edit, path=None):
         if path is None:
             # get the current line and the current column
-            point = self.view.sel()[0].a
-            line = self.view.line(point)
-            col = self.view.rowcol(point)[1]
-            text = self.view.substr(line)
-            # Get the path by walking left and right from the current cursor location
-            path = ''
-            delimiters = get_setting('delimiters', ' "\'')
-            if text:
-                # Walk left from point to end of path
-                for i in range(col - 1, -1, -1):
-                    character = text[i]
-                    if delimiters.find(character) != -1:
-                        break
-                    path = '%s%s' % (character, path)
-                # Walk right from point to end of path
-                for i in range(col, len(text)):
-                    character = text[i]
-                    if delimiters.find(character) != -1:
-                        break
-                    path = '%s%s' % (path, character)
-                path = path.strip()
+            sel = self.view.sel()
+            try:
+                region = sel[0]
+            except IndexError:
+                return
+            if region.a == region.b:
+                point = region.a
+                line = self.view.line(point)
+                col = self.view.rowcol(point)[1]
+                text = self.view.substr(line)
+                # Get the path by walking left and right from the current cursor location
+                path = ''
+                delimiters = get_setting('delimiters', ' "\'')
+                if text:
+                    # Walk left from point to end of path
+                    for i in range(col - 1, -1, -1):
+                        character = text[i]
+                        if delimiters.find(character) != -1:
+                            break
+                        path = '%s%s' % (character, path)
+                    # Walk right from point to end of path
+                    for i in range(col, len(text)):
+                        character = text[i]
+                        if delimiters.find(character) != -1:
+                            break
+                        path = '%s%s' % (path, character)
+            else:
+                path = self.view.substr(region)
+            path = path.strip()
 
         self.hits = []
 
